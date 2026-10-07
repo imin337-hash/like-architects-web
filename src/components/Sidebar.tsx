@@ -11,12 +11,13 @@ export default function Sidebar() {
 
   // 페이지 이동 시 사이드바 자동 열림/닫힘 제어
   useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
     if (pathname.startsWith('/project/')) {
       // 프로젝트 상세 페이지 진입 시 자동으로 숨김 (사진 몰입도 극대화)
       setIsOpen(false);
     } else if (pathname === '/') {
-      // 홈 화면 진입 시 다시 열어줌
-      setIsOpen(true);
+      // 홈 화면 진입 시 데스크탑은 열고, 모바일은 닫아줌
+      setIsOpen(!isMobile);
     }
   }, [pathname]);
 

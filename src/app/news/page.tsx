@@ -5,34 +5,26 @@ import { useState } from 'react';
 const sampleNews = [
   { 
     id: 1, 
-    title: "LIKE ARCHITECTS, 2026 한국건축문화대상 우수상 수상", 
-    date: "2026. 09. 15", 
-    category: "AWARD",
-    content: "라이크 건축사사무소가 설계한 'The Minimalist Concrete' 프로젝트가 2026년 한국건축문화대상 우수상을 수상했습니다. 자연과 건축의 경계를 허문 실험적인 시도가 심사위원들의 높은 평가를 받았습니다.",
+    title: "테스트 뉴스 제목 1", 
+    date: "2024. 01. 01", 
+    category: "TEST",
+    content: "이 글은 웹사이트 레이아웃 및 폰트 확인을 위해 작성된 테스트용 텍스트입니다. 추후 정식 뉴스로 교체될 예정입니다.",
     link: ""
   },
   { 
     id: 2, 
-    title: "건축전문지 SPACE 11월호 프로젝트 게재", 
-    date: "2026. 08. 20", 
-    category: "PRESS",
-    content: "공간 매거진 11월호에 라이크 건축사사무소의 철학과 최근 프로젝트가 10페이지에 걸쳐 실렸습니다. 비워짐의 미학을 주제로 한 대표 건축사의 심도 깊은 대담을 확인하실 수 있습니다.",
-    link: "https://vmspace.com"
-  },
-  { 
-    id: 3, 
-    title: "신입/경력 건축 설계직 채용 공고", 
-    date: "2026. 07. 01", 
-    category: "NOTICE",
-    content: "라이크 건축사사무소에서 새로운 공간의 가능성을 함께 탐구할 열정적인 건축가를 찾습니다. 포트폴리오와 이력서를 info@likearchitects.kr 로 제출해 주시기 바랍니다.",
+    title: "테스트 뉴스 제목 2", 
+    date: "2024. 01. 02", 
+    category: "TEST",
+    content: "이 글은 웹사이트 레이아웃 및 폰트 확인을 위해 작성된 테스트용 텍스트입니다. 추후 정식 뉴스로 교체될 예정입니다.",
     link: ""
   },
   { 
-    id: 4, 
-    title: "DD HOUSE 프로젝트 준공 완료", 
-    date: "2026. 05. 12", 
-    category: "PROJECT",
-    content: "2년간 심혈을 기울여 온 DD HOUSE가 성공적으로 준공되었습니다. 클라이언트의 삶을 온전히 담아낸 이 공간은 향후 주요 건축 매체들을 통해 자세히 소개될 예정입니다.",
+    id: 3, 
+    title: "테스트 뉴스 제목 3", 
+    date: "2024. 01. 03", 
+    category: "TEST",
+    content: "이 글은 웹사이트 레이아웃 및 폰트 확인을 위해 작성된 테스트용 텍스트입니다. 추후 정식 뉴스로 교체될 예정입니다.",
     link: ""
   },
 ];

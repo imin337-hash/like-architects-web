@@ -75,9 +75,9 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1500ms] group-hover/item:scale-105" 
                 />
               )}
-              {/* 마우스 호버 시 나오는 타이틀 */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 p-4 text-center">
-                <h3 className="text-white text-[13px] font-medium tracking-widest uppercase">
+              {/* 마우스 호버 시 나오는 타이틀 (모바일에서는 항상 표시) */}
+              <div className="absolute inset-0 flex items-end justify-center lg:items-center bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-black/10 opacity-100 lg:opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 p-4 pb-6 lg:pb-4 text-center">
+                <h3 className="text-white text-[12px] lg:text-[13px] font-medium tracking-widest uppercase">
                   {project.title.rendered}
                 </h3>
               </div>

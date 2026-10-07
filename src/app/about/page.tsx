@@ -32,28 +32,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* 3. Awards & Exhibitions */}
-        <section className="border-t border-black pt-16">
-          <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
-            <h2 className="w-full md:w-1/4 text-[10px] font-medium uppercase text-gray-500 tracking-[0.3em]">Awards</h2>
-            <div className="w-full md:w-3/4">
-              <ul className="text-[12px] font-light tracking-widest text-black uppercase">
-                <li className="flex border-b border-gray-300 pb-6 mb-6">
-                  <span className="w-24 text-gray-500">2026</span>
-                  <span className="font-medium">한국건축문화대상 우수상</span>
-                </li>
-                <li className="flex border-b border-gray-300 pb-6 mb-6">
-                  <span className="w-24 text-gray-500">2025</span>
-                  <span className="font-medium">제주건축문화대상 본상</span>
-                </li>
-                <li className="flex border-b border-gray-300 pb-6">
-                  <span className="w-24 text-gray-500">2024</span>
-                  <span className="font-medium">신진건축사대상 대상</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+
 
       </div>
     </article>
