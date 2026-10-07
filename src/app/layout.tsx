@@ -29,8 +29,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 공사 중 화면 모드 (Vercel 환경 변수로 제어)
-  const isUnderConstruction = process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION?.toLowerCase() === 'true';
+  // [공사 중 스위치] 정식 오픈하실 때는 마지막의 true를 false로 바꾸시면 됩니다!
+  // (process.env.NODE_ENV === 'production' 덕분에 사장님 컴퓨터(localhost)에서는 항상 진짜 사이트가 보입니다.)
+  const isUnderConstruction = process.env.NODE_ENV === 'production' && true;
 
   if (isUnderConstruction) {
     return (
