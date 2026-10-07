@@ -54,7 +54,7 @@ export default function Sidebar() {
         `}
       >
         <div>
-          <Link href="/" className="block mb-16 w-24 relative hover:opacity-70 transition-opacity">
+          <Link href="/" className="block mb-16 w-24 relative hover:opacity-70 transition-opacity -ml-1.5">
             <Image 
               src="/logo.png" 
               alt="LIKE ARCHITECTS" 

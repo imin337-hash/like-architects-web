@@ -19,13 +19,18 @@ export const metadata: Metadata = {
   description: "Architecture firm website",
 };
 
+export const viewport = {
+  themeColor: "#ffffff",
+  colorScheme: "light only",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   // 공사 중 화면 모드 (Vercel 환경 변수로 제어)
-  const isUnderConstruction = process.env.UNDER_CONSTRUCTION === 'true';
+  const isUnderConstruction = process.env.UNDER_CONSTRUCTION?.toLowerCase() === 'true';
 
   if (isUnderConstruction) {
     return (
