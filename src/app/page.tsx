@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 // 카테고리 목록 (추후 워드프레스 ACF 연동 가능)
-const CATEGORIES = ["ALL", "ARCHITECTURE", "INTERIOR", "DESIGN", "ONGOING", "COMPETITION"];
+const CATEGORIES = ["ALL", "ARCHITECTURE", "INTERIOR"];
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("ALL");
