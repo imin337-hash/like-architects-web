@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   // 공사 중 화면 모드 (Vercel 환경 변수로 제어)
-  const isUnderConstruction = process.env.UNDER_CONSTRUCTION?.toLowerCase() === 'true';
+  const isUnderConstruction = process.env.NEXT_PUBLIC_UNDER_CONSTRUCTION?.toLowerCase() === 'true';
 
   if (isUnderConstruction) {
     return (
