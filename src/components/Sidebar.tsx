@@ -12,7 +12,7 @@ export default function Sidebar() {
       {/* 토글 아이콘 (열림: 좌측 화살표, 닫힘: 햄버거 메뉴) */}
       <button 
         onClick={toggle}
-        className="fixed top-10 left-10 z-[60] w-6 h-6 flex justify-center items-center text-[#222] transition-all duration-500 hover:opacity-60"
+        className="fixed top-8 sm:top-9 lg:top-10 left-5 sm:left-7 lg:left-10 z-[60] w-6 h-6 flex justify-center items-center text-[#222] transition-all duration-500 hover:opacity-60"
         aria-label="Toggle Menu"
       >
         {isOpen ? (

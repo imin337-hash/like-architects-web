@@ -43,17 +43,17 @@ export default function Home() {
     });
 
   return (
-    <section className="min-h-screen flex flex-col px-6 lg:px-10 pb-10">
+    <section className="min-h-screen flex flex-col px-5 sm:px-6 lg:px-10 pb-10">
       
-      {/* 상단 카테고리 필터 영역 (스티키 & 햄버거 메뉴와 황금 비율 정렬) */}
-      <div className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md pt-9 pb-6 mb-4 flex flex-wrap gap-6 lg:gap-8 text-[10px] font-medium tracking-[0.2em] uppercase transition-all duration-500 ${isOpen ? 'pl-0' : 'pl-14 lg:pl-16'}`}>
+      {/* 상단 카테고리 필터 영역 (모바일 1줄 고정 & 햄버거 메뉴와 황금 비율 정렬) */}
+      <div className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md pt-8 sm:pt-9 pb-5 sm:pb-6 mb-4 flex flex-nowrap items-center overflow-x-auto hide-scrollbar gap-3.5 sm:gap-6 lg:gap-8 text-[9.5px] sm:text-[10px] font-medium tracking-[0.14em] lg:tracking-[0.2em] uppercase transition-all duration-500 ${isOpen ? 'pl-0' : 'pl-9 sm:pl-12 lg:pl-16'}`}>
         {CATEGORIES.map(category => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`transition-colors border-b pb-1 ${
+            className={`flex-shrink-0 whitespace-nowrap transition-colors border-b pb-1 ${
               activeCategory === category 
-                ? "text-black border-black" 
+                ? "text-black border-black font-semibold" 
                 : "text-gray-400 border-transparent hover:text-gray-600"
             }`}
           >
