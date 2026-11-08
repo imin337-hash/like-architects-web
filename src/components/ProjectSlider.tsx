@@ -44,11 +44,11 @@ export default function ProjectSlider({ images }: { images: { url: string; capti
   if (!images || images.length === 0) return null;
 
   return (
-    <div className="flex flex-col select-none w-fit max-w-full">
+    <div className="flex flex-col select-none w-full lg:w-fit max-w-full">
       
       {/* 사진 프레임: 화면 한 페이지에 스크롤 없이 딱 들어오는 3:2 원본 무손실 뷰 (배경 순백색 처리) */}
       <div 
-        className="relative aspect-[3/2] h-[calc(100vh-13rem)] max-h-[740px] w-auto max-w-full bg-white overflow-hidden group"
+        className="relative w-full h-auto aspect-[3/2] lg:h-[calc(100vh-13rem)] lg:max-h-[740px] lg:w-auto max-w-full bg-white overflow-hidden group"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -95,7 +95,7 @@ export default function ProjectSlider({ images }: { images: { url: string; capti
       </div>
 
       {/* 사진 하단: 캡션 및 인디케이터 바 (사진 가로 너비와 정확히 일치) */}
-      <div className="w-full mt-3 pt-2.5 border-t border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-[11px] text-gray-500">
+      <div className="w-full mt-2 sm:mt-3 pt-2 sm:pt-2.5 border-t border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 text-[11px] text-gray-500">
         
         {/* 좌측: 사진 캡션 */}
         <div className="flex items-center gap-2">

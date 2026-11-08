@@ -59,8 +59,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ id: 
   contentHtml = contentHtml.replace(/<img[^>]*>/gi, '');
 
   return (
-    <article className="min-h-screen lg:h-screen lg:overflow-hidden bg-white text-black pt-20 lg:pt-22 pb-8 px-6 lg:px-12 w-full">
-      <div className="w-full h-full flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-14 items-start">
+    <article className="min-h-screen lg:h-screen lg:overflow-hidden bg-white text-black pt-16 sm:pt-20 lg:pt-22 pb-8 px-5 sm:px-6 lg:px-12 w-full">
+      <div className="w-full h-full flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-12 xl:gap-14 items-start">
         
         {/* ========================================================
             좌측: 화면 왼쪽에 딱 붙는 정보 & 설명글 영역 (독립 스크롤)
