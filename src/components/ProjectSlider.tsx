@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export default function ProjectSlider({ images }: { images: { url: string; caption: string }[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -24,13 +25,33 @@ export default function ProjectSlider({ images }: { images: { url: string; capti
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
+  // 모바일 터치 스와이프 제스처
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
+    setTouchStartX(null);
+  };
+
   if (!images || images.length === 0) return null;
 
   return (
     <div className="flex flex-col select-none w-fit max-w-full">
       
       {/* 사진 프레임: 화면 한 페이지에 스크롤 없이 딱 들어오는 3:2 원본 무손실 뷰 (배경 순백색 처리) */}
-      <div className="relative aspect-[3/2] h-[calc(100vh-13rem)] max-h-[740px] w-auto max-w-full bg-white overflow-hidden group">
+      <div 
+        className="relative aspect-[3/2] h-[calc(100vh-13rem)] max-h-[740px] w-auto max-w-full bg-white overflow-hidden group"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <Image
           src={images[currentIndex].url}
           alt={`Project image ${currentIndex + 1}`}
@@ -41,29 +62,33 @@ export default function ProjectSlider({ images }: { images: { url: string; capti
           priority
         />
 
-        {/* 선명하고 직관적인 좌/우 넘김 화살표 */}
+        {/* 1안 + 2안 결합 방식: 검은 원형 바탕 완전 제거, 사진 좌/우 절반 클릭 분할 + 호버 시에만 얇은 헤어라인 화살표 페이드인 */}
         {images.length > 1 && (
           <>
-            {/* 이전(좌) 화살표 */}
+            {/* 좌측 50% 이전 사진 클릭 영역 */}
             <button
               onClick={prevSlide}
-              className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/75 text-white shadow-md flex items-center justify-center transition-all duration-200 cursor-pointer backdrop-blur-sm hover:scale-105 active:scale-95 z-20"
+              className="absolute left-0 top-0 bottom-0 w-1/2 z-20 flex items-center justify-start pl-4 md:pl-8 group/prev focus:outline-none cursor-pointer"
               aria-label="Previous image"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
+              <span className="w-12 h-12 flex items-center justify-center text-white opacity-0 group-hover:opacity-85 hover:!opacity-100 group-hover/prev:-translate-x-1 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 19l-7-7 7-7" />
+                </svg>
+              </span>
             </button>
             
-            {/* 다음(우) 화살표 */}
+            {/* 우측 50% 다음 사진 클릭 영역 */}
             <button
               onClick={nextSlide}
-              className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white shadow-md flex items-center justify-center transition-all duration-200 cursor-pointer backdrop-blur-sm hover:scale-105 active:scale-95 z-20"
+              className="absolute right-0 top-0 bottom-0 w-1/2 z-20 flex items-center justify-end pr-4 md:pr-8 group/next focus:outline-none cursor-pointer"
               aria-label="Next image"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6" />
-              </svg>
+              <span className="w-12 h-12 flex items-center justify-center text-white opacity-0 group-hover:opacity-85 hover:!opacity-100 group-hover/next:translate-x-1 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 18l7-7-7-7" />
+                </svg>
+              </span>
             </button>
           </>
         )}
