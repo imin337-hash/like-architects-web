@@ -1,48 +1,52 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { sampleProjects } from "@/lib/sampleData";
+import { useSidebar } from "@/context/SidebarContext";
 
-// 카테고리 목록 (추후 워드프레스 ACF 연동 가능)
-const CATEGORIES = ["ALL", "ARCHITECTURE", "INTERIOR"];
+// 카테고리 목록 (워드프레스 분류와 연동)
+const CATEGORIES = ["ALL", "ARCHITECTURE", "INTERIOR", "DESIGN"];
 
 export default function Home() {
+  const { isOpen } = useSidebar();
   const [activeCategory, setActiveCategory] = useState("ALL");
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const projects = sampleProjects;
 
-  // 워드프레스에서 실제 데이터 가져오기
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const res = await fetch("https://likearch.mycafe24.com/wp-json/wp/v2/projects?_embed=1&per_page=100");
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setProjects(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch projects", error);
-      } finally {
-        setLoading(false);
+
+  // 카테고리 순서 정의 (ARCHITECTURE -> INTERIOR -> COMPETITION -> +)
+  const CATEGORY_ORDER = ["ARCHITECTURE", "INTERIOR", "DESIGN"];
+
+  // 현재 선택된 카테고리에 맞게 프로젝트 필터링 및 정렬
+  const filteredProjects = [...projects]
+    .filter((project: any) => {
+      if (activeCategory === "ALL") return true;
+      
+      const terms = project._embedded?.['wp:term']?.flat() || [];
+      const categoryNames = terms.map((term: any) => term.name?.toUpperCase());
+      if (project.category) {
+        categoryNames.push(project.category.toUpperCase());
       }
-    }
-    fetchProjects();
-  }, []);
+      
+      return categoryNames.includes(activeCategory); 
+    })
+    .sort((a: any, b: any) => {
+      // 최신 연도순 정렬 (Year 내림차순: 2026 -> 2024 -> 2023 ...)
+      const yearA = parseInt(a.acf?.year || "0", 10);
+      const yearB = parseInt(b.acf?.year || "0", 10);
+      if (yearB !== yearA) {
+        return yearB - yearA;
+      }
 
-  // 현재 선택된 카테고리에 맞게 프로젝트 필터링 (임시로 모두 노출)
-  const filteredProjects = projects.filter((project: any) => {
-    if (activeCategory === "ALL") return true;
-    // 추후 워드프레스에 카테고리 필드가 추가되면 아래 주석을 풉니다
-    // return project.acf?.category === activeCategory;
-    return true; 
-  });
+      return 0; // 연도가 동일하면 등록 순서 유지
+    });
 
   return (
-    <section className="min-h-screen flex flex-col p-6 lg:p-10 pt-24 lg:pt-24">
+    <section className="min-h-screen flex flex-col px-6 lg:px-10 pb-10">
       
-      {/* 상단 카테고리 필터 영역 */}
-      <div className="w-full mb-10 flex flex-wrap gap-8 text-[10px] font-medium tracking-[0.2em] uppercase pl-12 lg:pl-0">
+      {/* 상단 카테고리 필터 영역 (스티키 & 햄버거 메뉴와 황금 비율 정렬) */}
+      <div className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md pt-9 pb-6 mb-4 flex flex-wrap gap-6 lg:gap-8 text-[10px] font-medium tracking-[0.2em] uppercase transition-all duration-500 ${isOpen ? 'pl-0' : 'pl-14 lg:pl-16'}`}>
         {CATEGORIES.map(category => (
           <button
             key={category}
@@ -58,14 +62,14 @@ export default function Home() {
         ))}
       </div>
 
-      {/* 프로젝트 그리드 영역 */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-6 group/grid">
+      {/* 프로젝트 그리드 영역: 한 줄에 7개씩 표시 (데스크탑) */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4 group/grid">
         {filteredProjects.length > 0 ? filteredProjects.map((project: any) => (
             <Link 
               href={`/project/${project.id}`}
               key={project.id} 
               className="relative bg-[#eaeaea] cursor-pointer overflow-hidden transition-all duration-700 ease-out 
-                group/item group-hover/grid:opacity-30 hover:!opacity-100 aspect-square"
+                group/item group-hover/grid:opacity-30 hover:!opacity-100 aspect-[4/3]"
             >
               {project._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
                 <Image 
@@ -75,11 +79,16 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1500ms] group-hover/item:scale-105" 
                 />
               )}
-              {/* 마우스 호버 시 나오는 타이틀 (모바일에서는 항상 표시) */}
-              <div className="absolute inset-0 flex items-end justify-center lg:items-center bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-black/10 opacity-100 lg:opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 p-4 pb-6 lg:pb-4 text-center">
-                <h3 className="text-white text-[12px] lg:text-[13px] font-medium tracking-widest uppercase">
-                  {project.title.rendered}
-                </h3>
+              {/* 마우스 호버 시 나오는 타이틀 및 카테고리 (모바일에서는 항상 표시) */}
+              <div className="absolute inset-0 flex items-end justify-center lg:items-center bg-gradient-to-t from-black/60 via-transparent to-transparent lg:bg-black/35 opacity-100 lg:opacity-0 group-hover/item:opacity-100 transition-opacity duration-500 p-3 pb-4 lg:pb-3 text-center">
+                <div className="flex flex-col items-center">
+                  <span className="text-[9px] font-mono tracking-[0.2em] text-white/70 uppercase mb-1">
+                    {project.category} · {project.acf?.year}
+                  </span>
+                  <h3 className="text-white text-[11px] lg:text-[12px] font-medium tracking-wider uppercase break-words line-clamp-2 px-1">
+                    {project.title.rendered}
+                  </h3>
+                </div>
               </div>
             </Link>
           )

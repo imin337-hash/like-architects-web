@@ -32,9 +32,11 @@ export default function News() {
   return (
     <section className="min-h-screen py-24 px-8 lg:px-16 bg-transparent">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-[11px] font-medium uppercase text-gray-500 mb-16 tracking-[0.3em]">News & Press</h2>
+        <h2 className="text-[11px] font-medium uppercase text-gray-500 tracking-[0.3em] pb-3 border-b border-black">
+          News & Press
+        </h2>
         
-        <div className="border-t border-black">
+        <div>
           {loading ? (
             <div className="py-20 text-center text-[11px] text-gray-400 tracking-[0.2em] uppercase">
               Loading News...

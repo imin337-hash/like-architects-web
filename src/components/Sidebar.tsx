@@ -1,31 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useSidebar } from "@/context/SidebarContext";
 
 export default function Sidebar() {
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(true);
-
-  // 페이지 이동 시 사이드바 자동 열림/닫힘 제어
-  useEffect(() => {
-    const isMobile = window.innerWidth < 1024;
-    if (pathname.startsWith('/project/')) {
-      // 프로젝트 상세 페이지 진입 시 자동으로 숨김 (사진 몰입도 극대화)
-      setIsOpen(false);
-    } else if (pathname === '/') {
-      // 홈 화면 진입 시 데스크탑은 열고, 모바일은 닫아줌
-      setIsOpen(!isMobile);
-    }
-  }, [pathname]);
+  const { isOpen, toggle, setIsOpen } = useSidebar();
 
   return (
     <>
       {/* 토글 아이콘 (열림: 좌측 화살표, 닫힘: 햄버거 메뉴) */}
       <button 
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggle}
         className="fixed top-10 left-10 z-[60] w-6 h-6 flex justify-center items-center text-[#222] transition-all duration-500 hover:opacity-60"
         aria-label="Toggle Menu"
       >

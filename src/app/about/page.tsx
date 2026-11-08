@@ -1,38 +1,156 @@
-export default function About() {
-  return (
-    <article className="min-h-screen py-32 px-10 lg:px-20 bg-transparent text-black">
-      <div className="max-w-4xl mx-auto space-y-40">
-        
-        {/* 1. Philosophy */}
-        <section>
-          <h2 className="text-[10px] font-medium uppercase text-gray-500 mb-12 tracking-[0.3em]">Philosophy</h2>
-          <p className="text-lg lg:text-xl font-light leading-[2.2] tracking-wide break-keep text-black">
-            "당신이 가장 좋아하는 공간은 어떤 모습입니까?"<br className="hidden md:block"/>
-            LIKE ARCHITECTS는 이 단순한 질문에서 출발합니다.<br className="hidden md:block"/>
-            우리는 형태를 강요하기보다, 당신의 삶과 취향이 온전히 묻어나는 '진짜 좋아하는 공간'을 설계합니다.
-          </p>
-        </section>
+import Link from "next/link";
+import { aboutData } from "@/lib/aboutData";
 
-        {/* 2. Principal CV */}
-        <section className="border-t border-gray-300 pt-16">
-          <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
-            <h2 className="w-full md:w-1/4 text-[10px] font-medium uppercase text-gray-500 tracking-[0.3em]">Principal</h2>
-            <div className="w-full md:w-3/4 space-y-12">
-              <div>
-                <h3 className="text-2xl font-medium tracking-[0.15em] uppercase mb-2 text-black">LEE JAE HO</h3>
-                <p className="text-[11px] text-gray-500 tracking-widest uppercase">KIRA, 대표 건축사</p>
-              </div>
-              <ul className="space-y-4 text-[12px] font-light tracking-wide text-gray-800 uppercase">
-                <li className="flex"><span className="w-24 text-gray-500">2026 —</span><span className="text-black font-medium">LIKE ARCHITECTS</span></li>
-                <li className="flex"><span className="w-24 text-gray-500">2015 —</span><span className="text-black font-medium">ETAA</span></li>
-                <li className="flex"><span className="w-24 text-gray-500">2013 —</span><span className="text-black font-medium">DA GROUP</span></li>
-                <li className="flex"><span className="w-24 text-gray-500">2010 —</span><span className="text-black font-medium">SPACE</span></li>
-              </ul>
+export default function About() {
+  const { studio, architect, awards, awardsNote, careers } = aboutData;
+
+  return (
+    <article className="min-h-screen py-24 px-8 lg:px-16 bg-transparent text-black">
+      <div className="max-w-4xl mx-auto space-y-16 md:space-y-24">
+        
+        {/* =========================================
+            Section 01: Studio & Philosophy
+        ========================================== */}
+        <section className="space-y-6">
+          <div className="flex items-baseline justify-between pb-3 border-b border-black">
+            <h2 className="text-[11px] font-medium uppercase text-gray-500 tracking-[0.3em]">
+              Studio & Philosophy
+            </h2>
+            <span className="text-[10px] font-mono text-gray-400 tracking-widest">01</span>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-[15px] font-normal text-black">
+                {studio.title_ko}
+              </h3>
+              <p className="text-[10px] tracking-widest text-gray-400 uppercase font-mono mt-0.5">
+                {studio.title_en}
+              </p>
+            </div>
+            
+            <div className="space-y-3 text-[14px] font-light leading-relaxed text-black break-keep">
+              {studio.philosophy.map((para, i) => (
+                <p key={i} dangerouslySetInnerHTML={{ __html: para }} />
+              ))}
             </div>
           </div>
         </section>
 
 
+        {/* =========================================
+            Section 02: Principal Architect
+        ========================================== */}
+        <section className="space-y-6">
+          <div className="flex items-baseline justify-between pb-3 border-b border-black">
+            <h2 className="text-[11px] font-medium uppercase text-gray-500 tracking-[0.3em]">
+              Principal Architect
+            </h2>
+            <span className="text-[10px] font-mono text-gray-400 tracking-widest">02</span>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-[15px] font-normal text-black">
+                {architect.name_ko}
+              </h3>
+              <p className="text-[10px] tracking-widest text-gray-400 uppercase font-mono mt-0.5">
+                {architect.name_en} / {architect.role}
+              </p>
+            </div>
+
+            <div className="space-y-3 text-[14px] font-light leading-relaxed text-black break-keep">
+              {architect.bio.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+
+            <div className="pt-4 border-t border-gray-200 space-y-1 text-[11px] text-gray-500 font-light">
+              {architect.credentials.map((row, i) => (
+                <div key={i} className="flex flex-wrap gap-x-5 gap-y-1">
+                  {row.map((item, j) => (
+                    <span key={j}>• {item}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* =========================================
+            Section 03: Awards & Honors
+        ========================================== */}
+        <section className="space-y-6">
+          <div className="flex items-baseline justify-between pb-3 border-b border-black">
+            <h2 className="text-[11px] font-medium uppercase text-gray-500 tracking-[0.3em]">
+              Awards & Honors
+            </h2>
+            <span className="text-[10px] font-mono text-gray-400 tracking-widest">03</span>
+          </div>
+
+          <div className="space-y-3">
+            <div className="divide-y divide-gray-200">
+              {awards.map((award, i) => (
+                <div key={i} className="flex items-baseline justify-between gap-4 py-3">
+                  <div className="flex items-baseline gap-6">
+                    <span className="text-[10px] font-mono tracking-widest text-gray-500 uppercase w-12 shrink-0">
+                      {award.year}
+                    </span>
+                    <span className="text-[14px] font-light text-black break-keep">
+                      {award.title}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono font-medium text-black tracking-widest uppercase shrink-0">
+                    {award.prize}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {awardsNote && (
+              <p className="pt-2 text-[10px] font-mono text-gray-400 font-light">
+                {awardsNote}
+              </p>
+            )}
+          </div>
+        </section>
+
+
+                {/* =========================================
+            Section 04: Careers & People
+        ========================================== */}
+        <section className="space-y-6">
+          <div className="flex items-baseline justify-between pb-3 border-b border-black">
+            <h2 className="text-[11px] font-medium uppercase text-gray-500 tracking-[0.3em]">
+              Careers & People
+            </h2>
+            <span className="text-[10px] font-mono text-gray-400 tracking-widest">04</span>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-[15px] font-normal text-black">
+                {careers.title_ko}
+              </h3>
+              <p className="text-[10px] tracking-widest text-gray-400 uppercase font-mono mt-0.5">
+                {careers.title_en}
+              </p>
+            </div>
+
+            <p className="text-[14px] font-light leading-relaxed text-black break-keep">
+              {careers.desc}
+            </p>
+            <div className="pt-2">
+              <a 
+                href={`mailto:${careers.email}`} 
+                className="inline-block text-[11px] font-bold tracking-[0.2em] text-black hover:text-gray-500 transition-colors uppercase border-b border-black hover:border-transparent pb-0.5"
+              >
+                {careers.email}
+              </a>
+            </div>
+          </div>
+        </section>
 
       </div>
     </article>

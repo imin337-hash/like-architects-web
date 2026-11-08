@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 import Sidebar from "@/components/Sidebar";
+import { SidebarProvider } from "@/context/SidebarContext";
 
 export const metadata: Metadata = {
   title: "LIKE ARCHITECTS",
@@ -54,14 +55,14 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-screen bg-white text-[#222222] font-sans selection:bg-[#222] selection:text-white">
-        
-        <Sidebar />
+        <SidebarProvider>
+          <Sidebar />
 
-        {/* 메인 콘텐츠 영역 */}
-        <main className="flex-1 w-full min-h-screen relative">
-          {children}
-        </main>
-        
+          {/* 메인 콘텐츠 영역 */}
+          <main className="flex-1 w-full min-h-screen relative">
+            {children}
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   );

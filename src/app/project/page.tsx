@@ -2,19 +2,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { sampleProjects } from "@/lib/sampleData";
 
+const CATEGORY_ORDER = ["ARCHITECTURE", "INTERIOR", "DESIGN"];
+
 async function getProjects() {
-  try {
-    const res = await fetch('https://likearchitects.kr/wp-json/wp/v2/projects?_embed=1', { next: { revalidate: 10 } });
-    let wpProjects = [];
-    if (res.ok) {
-      wpProjects = await res.json();
+  return [...sampleProjects].sort((a: any, b: any) => {
+    // 최신 연도순 정렬 (2026 -> 2024 -> ...)
+    const yearA = parseInt(a.acf?.year || "0", 10);
+    const yearB = parseInt(b.acf?.year || "0", 10);
+    if (yearB !== yearA) {
+      return yearB - yearA;
     }
-    // 워드프레스 데이터가 부족할 경우 샘플 데이터로 채움
-    return [...wpProjects, ...sampleProjects];
-  } catch (error) {
-    console.error("Failed to fetch projects:", error);
-    return sampleProjects;
-  }
+    return 0;
+  });
 }
 
 export default async function Project() {
@@ -64,7 +63,7 @@ export default async function Project() {
 
                 <div 
                   className="text-gray-700 font-light leading-[2.0] break-keep text-[13px] mb-8"
-                  dangerouslySetInnerHTML={{ __html: project.content?.rendered || '상세 설명이 없습니다.' }}
+                  dangerouslySetInnerHTML={{ __html: project.acf?.summary || (project.content?.rendered ? project.content.rendered.replace(/<figure[^>]*>[\s\S]*?<\/figure>/gi, '').replace(/<img[^>]*>/gi, '') : '상세 설명이 없습니다.') }}
                 />
                 
                 <Link href={`/project/${project.id}`} className="inline-block mt-8 text-[11px] font-bold tracking-widest text-black hover:text-gray-500 transition-colors uppercase border-b border-black hover:border-transparent pb-1">
